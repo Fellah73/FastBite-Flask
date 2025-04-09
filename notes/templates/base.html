@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+
+    <title>{% block title %} {% endblock %}</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark">
+      <a class="navbar-brand" href="#">Food Market</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('home_page')}}"
+              >Home <span class="sr-only">(current)</span></a
+            >
+          </li>
+
+          {% if current_user.is_authenticated %}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('command_page')}}">Food</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('promotion_page')}}">Promo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('panier_page')}}"> Panier</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('reservation_page')}}">
+              Reservation</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('about_page')}}">
+              About</a
+            >
+          </li>
+
+          {% endif %}
+        </ul>
+
+        {% if current_user.is_authenticated %}
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link budget-display">
+              {% block budget %} {% endblock %}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('logout_page')}}">Logout</a>
+          </li>
+        </ul>
+
+        {% else %}
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('login_page')}}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('register_page')}}">Register</a>
+          </li>
+        </ul>
+
+        {% endif %}
+      </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% endif %} {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+      <button
+        type="button"
+        class="n1-2 nb-1 close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+    {% endfor %} {% endwith %} {% block content %} {% endblock %}
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+
+  <style>
+    /* Primary colors: light blue, dark blue, and white */
+    :root {
+      --light-blue: #64b5f6;
+      --medium-blue: #1976d2;
+      --dark-blue: #0d47a1;
+      --white: #ffffff;
+      --light-gray: #f5f9ff;
+    }
+
+    body {
+      background-color: var(--light-gray);
+      color: var(--dark-blue);
+      text-align: center;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      background: linear-gradient(
+        to right,
+        var(--dark-blue),
+        var(--light-blue)
+      );
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 10px 20px;
+    }
+
+    .navbar-brand {
+      color: var(--white) !important;
+      font-weight: bold;
+      font-size: 24px;
+      padding: 10px 15px;
+      background-color: var(--dark-blue);
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar-collapse {
+      background: linear-gradient(
+        to right,
+        var(--dark-blue),
+        var(--light-blue)
+      );
+      border-radius: 5px;
+      padding: 5px 15px;
+    }
+
+    .nav-link {
+      color: var(--white) ;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      padding: 8px 15px;
+      border-radius: 4px;
+    }
+
+    .nav-link:hover {
+      background-color: var(--light-blue);
+      color: var(--dark-blue) !important;
+    }
+
+    .nav-item.active .nav-link {
+      background-color: var(--white);
+      color: var(--dark-blue) !important;
+      font-weight: bold;
+    }
+
+    /* Budget display */
+    .budget-display {
+      background-color: var(--dark-blue);
+      color: var(--white) !important;
+      font-weight: bold !important;
+      padding: 8px 15px;
+      border-radius: 15px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Alert styling */
+    .alert {
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin: 10px auto;
+      max-width: 90%;
+    }
+
+    /* Links */
+    a {
+      color: var(--medium-blue);
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--light-blue);
+      text-decoration: none;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background-color: var(--medium-blue) !important;
+      border-color: var(--medium-blue) !important;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--dark-blue) !important;
+      border-color: var(--dark-blue) !important;
+    }
+
+    /* Content area */
+    .container {
+      background-color: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .navbar-collapse {
+        margin-top: 10px;
+      }
+
+      .nav-link {
+        padding: 10px;
+      }
+    }
+  </style>
+</html>

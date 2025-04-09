@@ -1,0 +1,100 @@
+{% extends 'base.html' %} {% block title %} About {% endblock %} {% block
+content %}
+<body>
+  <main>
+    <section class="contact-info">
+      <h2>Nos Coordonnées</h2>
+      <p>Adresse : ALger,Algeria</p>
+      <p>
+        Heures d'ouverture : Lundi - Vendredi : 9h00 - 22h00<br />Samedi -
+        Dimanche : 10h00 - 23h00
+      </p>
+      <p>Téléphone : +213 1 23 45 67 89</p>
+      <h2>Suivez-nous sur les Réseaux Sociaux</h2>
+      <ul class="social-links">
+        <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+        <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+        <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f9fa;
+  }
+
+  main {
+    padding: 2rem;
+  }
+
+  .contact-info,
+  .contact-form {
+    margin-bottom: 2rem;
+  }
+
+  .contact-info h2,
+  .contact-form h2 {
+    margin-bottom: 1rem;
+  }
+
+  .contact-form form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-form label {
+    margin: 0.5rem 0;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .contact-form input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .contact-form input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  .social-links {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .social-links li {
+    display: inline;
+    margin-right: 1rem;
+  }
+
+  .social-links a {
+    text-decoration: none;
+    color: #007bff;
+    color: brown;
+  }
+
+  .social-links a:hover {
+    text-decoration: underline;
+    color: brown;
+  }
+</style>
+{% endblock %}

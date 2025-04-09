@@ -1,0 +1,496 @@
+{% extends 'base.html' %} {% block title %} Promotion {% endblock %} {% block
+budget %} {{ budget }} DZ {% endblock %} {% block content %}
+
+<body>
+  <div class="parent-container">
+    <div class="container menu-section center">
+      <h2 class="text-center">Nos Menus</h2>
+      <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="menu-du-jour-tab"
+            data-toggle="tab"
+            href="#menu-du-jour"
+            role="tab"
+            aria-controls="menu-du-jour"
+            aria-selected="true"
+            >Menu du Jour</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="menu-enfant-tab"
+            data-toggle="tab"
+            href="#menu-enfant"
+            role="tab"
+            aria-controls="menu-enfant"
+            aria-selected="false"
+            >Menu Enfant</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="menu-vegetarien-tab"
+            data-toggle="tab"
+            href="#menu-vegetarien"
+            role="tab"
+            aria-controls="menu-vegetarien"
+            aria-selected="false"
+            >Menu Végétarien</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="menu-gourmet-tab"
+            data-toggle="tab"
+            href="#menu-gourmet"
+            role="tab"
+            aria-controls="menu-gourmet"
+            aria-selected="false"
+            >Menu Gourmet</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="menu-combo-tab"
+            data-toggle="tab"
+            href="#menu-combo"
+            role="tab"
+            aria-controls="menu-combo"
+            aria-selected="false"
+            >Menu Combo</a
+          >
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <!-- Menu du Jour -->
+
+        <div
+          class="tab-pane fade show active"
+          id="menu-du-jour"
+          role="tabpanel"
+          aria-labelledby="menu-du-jour-tab"
+        >
+          <div class="row">
+            <!-- Carte de Menu -->
+
+            {% for menu in Menu.query.filter_by(type='Spécial').all() %} {%
+            include 'includes/purchasing_menus/purchasing_menu_modals.html' %}
+            <div class="col-md-4">
+              <div class="card menu-card">
+                <img
+                  src="{{ url_for('static', filename='images/menus/jour/' + menu.image_url) }}"
+                  class="card-img-top"
+                  alt="{{ menu.name }}"
+                />
+                <div class="card-body menu-card-body">
+                  <h5 class="card-title menu-card-title">{{ menu.name }}</h5>
+                  <p class="card-text menu-card-text">
+                    <strong>Composants:</strong><br />
+                    {% if menu.sandwich is not none %} - Entrée: {{
+                    menu.sandwich.name }} <br />
+                    {% endif %} {% if menu.pizza is not none %} - Plat
+                    principal: Pizza {{ menu.pizza.name }} <br />
+                    {% endif %} {% if menu.dessert is not none %} - Dessert: {{
+                    menu.dessert.name }}<br />
+                    {% endif %} {% if menu.beverage is not none %} - Boisson: {{
+                    menu.beverage.name }}
+                  </p>
+                  {% endif %}
+                  <p class="card-text menu-card-text">
+                    <strong>Prix:</strong> {{ menu.price }} DZD
+                  </p>
+                  <p class="card-text menu-card-text">{{ menu.description }}</p>
+                  <button
+                    type="button"
+                    class="btn btn-outline btn-info"
+                    data-toggle="modal"
+                    data-target="#Modal-AddToCart-{{ menu.id }}"
+                  >
+                    Ajouter au panier
+                  </button>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+            <!-- Répétez les cartes pour chaque plat -->
+          </div>
+        </div>
+
+        <!-- Menu Enfant -->
+
+        <div
+          class="tab-pane fade"
+          id="menu-enfant"
+          role="tabpanel"
+          aria-labelledby="menu-enfant-tab"
+        >
+          <div class="row">
+            <!-- Carte de Menu -->
+
+            {% for menu in Menu.query.filter_by(type='Enfants').all() %} {%
+            include 'includes/purchasing_menus/purchasing_menu_modals.html' %}
+            <div class="col-md-4">
+              <div class="card menu-card">
+                <img
+                  src="{{ url_for('static', filename='images/menus/enfant/' + menu.image_url) }}"
+                  class="card-img-top"
+                  alt="{{ menu.name }}"
+                />
+                <div class="card-body menu-card-body">
+                  <h5 class="card-title menu-card-title">{{ menu.name }}</h5>
+                  <p class="card-text menu-card-text">
+                    <strong>Composants:</strong><br />
+                    {% if menu.sandwich is not none %} - Entrée: {{
+                    menu.sandwich.name }} <br />
+                    {% endif %} {% if menu.pizza is not none %} - Plat
+                    principal: Pizza {{ menu.pizza.name }} <br />
+                    {% endif %} {% if menu.dessert is not none %} - Dessert: {{
+                    menu.dessert.name }}<br />
+                    {% endif %} {% if menu.beverage is not none %} - Boisson: {{
+                    menu.beverage.name }}
+                  </p>
+                  {% endif %}
+                  <p class="card-text menu-card-text">{{ menu.description }}</p>
+                  <p class="card-text menu-card-text">{{ menu.price }} DZD</p>
+                  <button
+                    type="button"
+                    class="btn btn-outline btn-info"
+                    data-toggle="modal"
+                    data-target="#Modal-AddToCart-{{ menu.id }}"
+                  >
+                    Ajouter au panier
+                  </button>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+            <!-- Répétez les cartes pour chaque plat -->
+          </div>
+        </div>
+
+        <!-- Menu Végétarien -->
+
+        <div
+          class="tab-pane fade"
+          id="menu-vegetarien"
+          role="tabpanel"
+          aria-labelledby="menu-vegetarien-tab"
+        >
+          <div class="row">
+            <!-- Carte de Menu -->
+            {% for menu in Menu.query.filter_by(type='Vegan').all() %} {%
+            include 'includes/purchasing_menus/purchasing_menu_modals.html' %}
+            <div class="col-md-4">
+              <div class="card menu-card">
+                <img
+                  src="{{ url_for('static', filename='images/menus/vegan/' + menu.image_url) }}"
+                  class="card-img-top"
+                  alt="{{ menu.name }}"
+                />
+                <div class="card-body menu-card-body">
+                  <h5 class="card-title menu-card-title">{{ menu.name }}</h5>
+                  <p class="card-text menu-card-text">
+                    <strong>Composants:</strong><br />
+                    {% if menu.sandwich is not none %} - Entrée: {{
+                    menu.sandwich.name }} <br />
+                    {% endif %} {% if menu.pizza is not none %} - Plat
+                    principal: Pizza {{ menu.pizza.name }} <br />
+                    {% endif %} {% if menu.dessert is not none %} - Dessert: {{
+                    menu.dessert.name }}<br />
+                    {% endif %} {% if menu.beverage is not none %} - Boisson: {{
+                    menu.beverage.name }}
+                  </p>
+                  {% endif %}
+                  <p class="card-text menu-card-text">{{ menu.description }}</p>
+                  <p class="card-text menu-card-text">{{ menu.price }} DZD</p>
+                  <button
+                    type="button"
+                    class="btn btn-outline btn-info"
+                    data-toggle="modal"
+                    data-target="#Modal-AddToCart-{{ menu.id }}"
+                  >
+                    Ajouter au panier
+                  </button>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            <!-- Répétez les cartes pour chaque plat -->
+          </div>
+        </div>
+
+        <!-- Menu Gourmet -->
+
+        <div
+          class="tab-pane fade"
+          id="menu-gourmet"
+          role="tabpanel"
+          aria-labelledby="menu-gourmet-tab"
+        >
+          <div class="row">
+            <!-- Carte de Menu -->
+            {% for menu in Menu.query.filter_by(type='Gourmet').all() %} {%
+            include 'includes/purchasing_menus/purchasing_menu_modals.html' %}
+            <div class="col-md-4">
+              <div class="card menu-card">
+                <img
+                  src="{{ url_for('static', filename='images/menus/gourmet/' + menu.image_url) }}"
+                  class="card-img-top"
+                  alt="{{ menu.name }}"
+                />
+                <div class="card-body menu-card-body">
+                  <h5 class="card-title menu-card-title">{{ menu.name }}</h5>
+                  <p class="card-text menu-card-text">
+                    <strong>Composants:</strong><br />
+                    {% if menu.sandwich is not none %} - Entrée: {{
+                    menu.sandwich.name }} <br />
+                    {% endif %} {% if menu.pizza is not none %} - Plat
+                    principal: Pizza {{ menu.pizza.name }} <br />
+                    {% endif %} {% if menu.dessert is not none %} - Dessert: {{
+                    menu.dessert.name }}<br />
+                    {% endif %} {% if menu.beverage is not none %} - Boisson: {{
+                    menu.beverage.name }}
+                  </p>
+                  {% endif %}
+                  <p class="card-text menu-card-text">{{ menu.description }}</p>
+                  <p class="card-text menu-card-text">{{ menu.price }} DZD</p>
+                  <button
+                    type="button"
+                    class="btn btn-outline btn-info"
+                    data-toggle="modal"
+                    data-target="#Modal-AddToCart-{{ menu.id }}"
+                  >
+                    Ajouter au panier
+                  </button>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            <!-- Répétez les cartes pour chaque plat -->
+          </div>
+        </div>
+
+        <!-- Menu Combo -->
+
+        <div
+          class="tab-pane fade"
+          id="menu-combo"
+          role="tabpanel"
+          aria-labelledby="menu-combo-tab"
+        >
+          <div class="row">
+            <!-- Carte de Menu -->
+
+            {% for menu in Menu.query.filter_by(type='Combo').all() %} {%
+            include 'includes/purchasing_menus/purchasing_menu_modals.html' %}
+            <div class="col-md-4">
+              <div class="card menu-card">
+                <img
+                  src="{{ url_for('static', filename='images/menus/combo/' + menu.image_url) }}"
+                  class="card-img-top"
+                  alt="{{ menu.name }}"
+                />
+                <div class="card-body menu-card-body">
+                  <h5 class="card-title menu-card-title">{{ menu.name }}</h5>
+                  <p class="card-text menu-card-text">
+                    <strong>Composants:</strong><br />
+                    {% if menu.sandwich is not none %} - Entrée: {{
+                    menu.sandwich.name }} <br />
+                    {% endif %} {% if menu.pizza is not none %} - Plat
+                    principal: {{ menu.pizza.name }} <br />
+                    {% endif %} {% if menu.dessert is not none %} - Dessert: {{
+                    menu.dessert.name }}<br />
+                    {% endif %} {% if menu.beverage is not none %} - Boisson: {{
+                    menu.beverage.name }}
+                  </p>
+                  {% endif %}
+
+                  <p class="card-text menu-card-text">{{ menu.price }} DZD</p>
+                  <p class="card-text menu-card-text">{{ menu.description }}</p>
+                  <button
+                    type="button"
+                    class="btn btn-outline btn-info"
+                    data-toggle="modal"
+                    data-target="#Modal-AddToCart-{{ menu.id }}"
+                  >
+                    Ajouter au panier
+                  </button>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+            <!-- Répétez les cartes pour chaque plat -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<style>
+  /* Primary colors: blue, violet, white */
+  :root {
+    --primary-blue: #1a75ff;
+    --primary-violet: #8a2be2;
+    --primary-white: #ffffff;
+    --light-blue: #e6f0ff;
+    --light-violet: #f3e6ff;
+  }
+
+  .parent-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 20px;
+
+  }
+
+  .menu-section {
+    width: 100%;
+    max-width: 1200px;
+    min-height: calc(100vh - 40px);
+  }
+
+  h2.text-center {
+    color: var(--primary-blue);
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .card img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-bottom: 3px solid var(--primary-violet);
+  }
+
+  .nav-tabs {
+    border-bottom: 2px solid var(--primary-violet);
+    margin-bottom: 30px;
+  }
+
+  .nav-tabs .nav-link {
+    color: var(--primary-blue);
+    font-weight: bold;
+    border: 1px solid transparent;
+    margin-right: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .nav-tabs .nav-link:hover {
+    border-color: var(--light-violet);
+    background-color: var(--light-violet);
+  }
+
+  .nav-tabs .nav-link.active {
+    color: var(--primary-white);
+    background: linear-gradient(
+      135deg,
+      var(--primary-blue),
+      var(--primary-violet)
+    );
+    border-color: var(--primary-violet);
+    border-bottom-color: transparent;
+  }
+
+  .card {
+    margin-bottom: 30px;
+  }
+
+  .menu-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    background: linear-gradient(
+      170deg,
+      var(--primary-violet),
+      var(--primary-blue)
+    );
+    height: 580px;
+    transition: all 0.3s ease;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(138, 43, 226, 0.3);
+  }
+
+  .menu-card img {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .menu-card-body {
+    padding: 20px;
+  }
+
+  .menu-card-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-white);
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .menu-card-text {
+    color: var(--primary-white);
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+
+  .menu-card-text strong {
+    color: var(--light-blue);
+    font-weight: bold;
+  }
+
+  .menu-card .btn {
+    background-color: var(--primary-white);
+    color: var(--primary-violet);
+    border: 2px solid var(--primary-white);
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .menu-card .btn:hover {
+    background-color: transparent;
+    color: var(--primary-white);
+    transform: scale(1.05);
+  }
+
+  /* Add some animation to price */
+  .menu-card-text:nth-child(4) {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--light-blue);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .col-md-4 {
+      padding: 0 10px;
+    }
+
+    .menu-card {
+      height: auto;
+      min-height: 550px;
+    }
+  }
+</style>
+{% endblock %}

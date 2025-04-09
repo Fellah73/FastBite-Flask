@@ -1,0 +1,951 @@
+{% extends 'base.html' %} {% block title %} Command {% endblock %} {% block
+budget %} {{ budget }} DZ {% endblock %} {% block content %}
+
+<body>
+  <div id="parent-container">
+    <div id="content-container" class="container" style="margin-top: 20px">
+      <div class="heading">
+        <h3 class="display-4 font-weight-normal">Command food now</h3>
+      </div>
+      <br />
+      <div class="row" style="margin-top: 10px; margin-left: 15px">
+        <div>
+          <br />
+          <div class="nav-tabs-container">
+            <ul class="nav flex-column nav-pills" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="tacos-tab"
+                  data-toggle="tab"
+                  href="#tacos"
+                  role="tab"
+                  aria-controls="old"
+                  aria-selected="true"
+                  >Tacos</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="wraps-tab"
+                  data-toggle="tab"
+                  href="#wraps"
+                  role="tab"
+                  aria-controls="burito"
+                  aria-selected="false"
+                  >Wraps</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="classic-tab"
+                  data-toggle="tab"
+                  href="#classic"
+                  role="tab"
+                  aria-controls="classic"
+                  aria-selected="false"
+                  >Classic Sandwich</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="burgers-tab"
+                  data-toggle="tab"
+                  href="#burgers"
+                  role="tab"
+                  aria-controls="burgers"
+                  aria-selected="false"
+                  >Burgers</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="paninis-tab"
+                  data-toggle="tab"
+                  href="#paninis"
+                  role="tab"
+                  aria-controls="sandwich"
+                  aria-selected="false"
+                  >Paninis</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="kebab-tab"
+                  data-toggle="tab"
+                  href="#kebab"
+                  role="tab"
+                  aria-controls="sandwich"
+                  aria-selected="false"
+                  >Kebab</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="pizza-tab"
+                  data-toggle="tab"
+                  href="#pizza"
+                  role="tab"
+                  aria-controls="sandwich"
+                  aria-selected="false"
+                  >Pizza</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="supplement-tab"
+                  data-toggle="tab"
+                  href="#supplement"
+                  role="tab"
+                  aria-controls="sandwich"
+                  aria-selected="false"
+                  >Supplement</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="beverages-tab"
+                  data-toggle="tab"
+                  href="#beverages"
+                  role="tab"
+                  aria-controls="sandwich"
+                  aria-selected="false"
+                  >Beverages</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="desserts-tab"
+                  data-toggle="tab"
+                  href="#gateaux"
+                  role="tab"
+                  aria-controls="sandwich"
+                  aria-selected="false"
+                  >Gateaux</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="tartes-tab"
+                  data-toggle="tab"
+                  href="#tartes"
+                  role="tab"
+                  aria-controls="sandwich"
+                  aria-selected="false"
+                  >Tartes</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="creme-tab"
+                  data-toggle="tab"
+                  href="#creme"
+                  role="tab"
+                  aria-controls="sandwich"
+                  aria-selected="false"
+                  >Creme</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="content-container">
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="tacos"
+              role="tabpanel"
+              aria-labelledby="old-tab"
+            >
+              <!-- Contenu de l'onglet tacos -->
+              <div class="row">
+                {% for sandwich in
+                Sandwich.query.filter_by(category="Tacos").all() %} {% include
+                'includes/infos_modals.html' %} {% include
+                'includes/purchasing/purchase_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ sandwich.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/sandwiches/' + sandwich.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ sandwich.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ sandwich.price }} DZ
+                      </p>
+
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-MoreInfo-{{ sandwich.id }}"
+                      >
+                        Info
+                      </button>
+
+                      <!-- Ajout de l'espace pour personnaliser le nombre de sandwichs avec un ID unique -->
+
+                      <button
+                        id="add-button"
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        data-target="#Modal-PurchaseFood-{{ sandwich.id }}"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div
+              class="tab-pane fade"
+              id="wraps"
+              role="tabpanel"
+              aria-labelledby="burito-tab"
+            >
+              <!-- Contenu de l'onglet Wraps -->
+              <div class="row">
+                {% for sandwich in
+                Sandwich.query.filter_by(category="Wraps").all() %} {% include
+                'includes/infos_modals.html' %} {% include
+                'includes/purchasing/purchase_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ sandwich.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/sandwiches/' + sandwich.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ sandwich.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ sandwich.price }} DZ
+                      </p>
+
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-MoreInfo-{{ sandwich.id }}"
+                      >
+                        Info
+                      </button>
+
+                      <button
+                        id="add-button"
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        data-target="#Modal-PurchaseFood-{{ sandwich.id }}"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="classic"
+              role="tabpanel"
+              aria-labelledby="classic-tab"
+            >
+              <!-- Contenu de l'onglet Classic Sandwich -->
+              <div class="row">
+                {% for sandwich in
+                Sandwich.query.filter_by(category="Sandwiches").all() %} {%
+                include 'includes/infos_modals.html' %} {% include
+                'includes/purchasing/purchase_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ sandwich.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/sandwiches/' + sandwich.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ sandwich.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ sandwich.price }} DZ
+                      </p>
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-MoreInfo-{{ sandwich.id }}"
+                      >
+                        Info
+                      </button>
+                      <button
+                        class="btn btn-outline btn-info"
+                        id="add-button"
+                        data-toggle="modal"
+                        data-target="#Modal-PurchaseFood-{{ sandwich.id }}"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="burgers"
+              role="tabpanel"
+              aria-labelledby="burgers-tab"
+            >
+              <!-- Contenu de l'onglet Burgers -->
+              <div class="row">
+                {% for sandwich in
+                Sandwich.query.filter_by(category="Burgers").all() %} {% include
+                'includes/infos_modals.html' %} {% include
+                'includes/purchasing/purchase_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ sandwich.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/sandwiches/' + sandwich.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ sandwich.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ sandwich.price }} DZ
+                      </p>
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-MoreInfo-{{ sandwich.id }}"
+                      >
+                        Info
+                      </button>
+                      <button
+                        class="btn btn-outline btn-info"
+                        id="add-button"
+                        data-toggle="modal"
+                        data-target="#Modal-PurchaseFood-{{ sandwich.id }}"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="paninis"
+              role="tabpanel"
+              aria-labelledby="sandwich-tab"
+            >
+              <!-- Contenu de l'onglet Sandwich -->
+              <div class="row">
+                {% for sandwich in
+                Sandwich.query.filter_by(category="Paninis").all() %} {% include
+                'includes/infos_modals.html' %} {% include
+                'includes/purchasing/purchase_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ sandwich.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/sandwiches/' + sandwich.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ sandwich.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ sandwich.price }} DZ
+                      </p>
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-MoreInfo-{{ sandwich.id }}"
+                      >
+                        Info
+                      </button>
+                      <button
+                        class="btn btn-outline btn-info"
+                        id="add-button"
+                        data-toggle="modal"
+                        data-target="#Modal-PurchaseFood-{{ sandwich.id }}"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div
+              class="tab-pane fade"
+              id="kebab"
+              role="tabpanel"
+              aria-labelledby="pizaza-tab"
+            >
+              <div class="row">
+                {% for sandwich in
+                Sandwich.query.filter_by(category="Kebab").all() %} {% include
+                'includes/infos_modals.html' %} {% include
+                'includes/purchasing/purchase_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ sandwich.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/sandwiches/' + sandwich.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ sandwich.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ sandwich.price }} DZ
+                      </p>
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-MoreInfo-{{ sandwich.id }}"
+                      >
+                        Info
+                      </button>
+                      <button
+                        class="btn btn-outline btn-info"
+                        id="add-button"
+                        data-toggle="modal"
+                        data-target="#Modal-PurchaseFood-{{ sandwich.id }}"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="pizza"
+              role="tabpanel"
+              aria-labelledby="pizza-tab"
+            >
+              <div class="row">
+                {% for pizza in Pizza.query.all() %} {% include
+                'includes/infos_pizza_modals.html' %} {% include
+                'includes/purchasing/purchase_pizza_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ pizza.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/pizza/' + pizza.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ pizza.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ pizza.price }} DZ
+                      </p>
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-Pizza-{{ pizza.id }}"
+                      >
+                        Info
+                      </button>
+                      <button
+                        class="btn btn-outline btn-info"
+                        id="add-button"
+                        data-target="#Modal-PurchasePizza-{{ pizza.id }}"
+                        data-toggle="modal"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div
+              class="tab-pane fade"
+              id="supplement"
+              role="tabpanel"
+              aria-labelledby="pizaza-tab"
+            >
+              <div class="row">
+                {% for pizza in Supplement.query.all() %} {% include
+                'includes/supplement_modals.html' %} {% include
+                'includes/purchasing/purchase_supplement_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ pizza.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/supplement/' + pizza.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ pizza.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ pizza.price }} DZ
+                      </p>
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-Supplement-{{ pizza.id }}"
+                      >
+                        Info
+                      </button>
+                      <button
+                        class="btn btn-outline btn-info"
+                        id="add-button"
+                        data-target="#Modal-PurchaseSupplement-{{ pizza.id }}"
+                        data-toggle="modal"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div
+              class="tab-pane fade"
+              id="beverages"
+              role="tabpanel"
+              aria-labelledby="pizaza-tab"
+            >
+              <div class="row">
+                {% for pizza in Beverage.query.all() %} {% include
+                'includes/beverage_modals.html' %} {% include
+                'includes/purchasing/purchase_beverage_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ pizza.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/drinks/' + pizza.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ pizza.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ pizza.price }} DZ
+                      </p>
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-Beverage-{{ pizza.id }}"
+                      >
+                        Info
+                      </button>
+                      <button
+                        class="btn btn-outline btn-info"
+                        id="add-button"
+                        data-target="#Modal-PurchaseBeverage-{{ pizza.id }}"
+                        data-toggle="modal"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="gateaux"
+              role="tabpanel"
+              aria-labelledby="pizaza-tab"
+            >
+              <div class="row">
+                {% for pizza in
+                Dessert.query.filter_by(category="Gâteaux").all() %} {% include
+                'includes/gateau_modals.html' %} {% include
+                'includes/purchasing/purchase_gateau_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ pizza.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/desserts/' + pizza.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ pizza.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ pizza.price }} DZ
+                      </p>
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-Gateau-{{ pizza.id }}"
+                      >
+                        Info
+                      </button>
+                      <button
+                        class="btn btn-outline btn-info"
+                        id="add-button"
+                        data-target="#Modal-PurchaseGateau-{{ pizza.id }}"
+                        data-toggle="modal"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div
+              class="tab-pane fade"
+              id="tartes"
+              role="tabpanel"
+              aria-labelledby="pizaza-tab"
+            >
+              <div class="row">
+                {% for pizza in Dessert.query.filter_by(category="Tartes").all()
+                %} {% include 'includes/tartes_modals.html' %} {% include
+                'includes/purchasing/purchase_tarte_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ pizza.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/desserts/' + pizza.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ pizza.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ pizza.price }} DZ
+                      </p>
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-Tartes-{{ pizza.id }}"
+                      >
+                        Info
+                      </button>
+                      <button
+                        class="btn btn-outline btn-info"
+                        id="add-button"
+                        data-target="#Modal-PurchaseTarte-{{ pizza.id }}"
+                        data-toggle="modal"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div
+              class="tab-pane fade"
+              id="creme"
+              role="tabpanel"
+              aria-labelledby="pizaza-tab"
+            >
+              <div class="row">
+                {% for pizza in Dessert.query.filter_by(category="Crèmes").all()
+                %} {% include 'includes/creme_modals.html' %} {% include
+                'includes/purchasing/purchase_creme_modals.html' %}
+                <div class="col-md-4">
+                  <div class="card text-center" id="sandwich-card">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-size: 15px">
+                        {{ pizza.name }}
+                      </h5>
+                      <img
+                        src="{{ url_for('static', filename='images/desserts/' + pizza.image_url) }}"
+                        class="card-img-top"
+                        alt="{{ pizza.name }}"
+                        style="
+                          height: 150px;
+                          width: 200px;
+                          object-fit: cover;
+                          border-radius: 10%;
+                        "
+                      />
+                      <p class="card-text" style="font-weight: bold">
+                        {{ pizza.price }} DZ
+                      </p>
+                      <button
+                        class="btn btn-outline btn-info"
+                        data-toggle="modal"
+                        id="info-button"
+                        data-target="#Modal-Creme-{{ pizza.id }}"
+                      >
+                        Info
+                      </button>
+                      <button
+                        class="btn btn-outline btn-info"
+                        id="add-button"
+                        data-target="#Modal-PurchaseCreme-{{ pizza.id }}"
+                        data-toggle="modal"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #parent-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+    }
+    #content-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      background-color: #5c96ed;
+    }
+    #sandwich-card {
+      height: 300px;
+      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+      margin: 20px;
+      width: 100%;
+    }
+
+    #sandwich-card h5,
+    p,
+    a {
+      color: white;
+      font-size: larger;
+      font-weight: 600;
+    }
+
+    #sandwich-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
+    }
+
+    #add-button {
+      background-color: rgb(194, 211, 211);
+      color: #4976ca;
+      font-weight: 600;
+      font-size: larger;
+      margin-left: 10px;
+    }
+
+    #add-button:hover {
+      background-color: rgb(28, 93, 155);
+      color: white;
+      font-weight: 600;
+      font-size: larger;
+    }
+
+    #info-button {
+      color: rgb(194, 211, 211);
+      background-color: #4976ca;
+      font-weight: 600;
+      font-size: larger;
+      margin-right: 10px;
+    }
+
+    #info-button:hover {
+      color: rgb(28, 93, 155);
+      background-color: white;
+      font-weight: 600;
+      font-size: larger;
+    }
+
+    .nav-tabs-container {
+      overflow-y: auto; /* Enable vertical scrolling */
+      max-height: 80vh; /* Set a maximum height for the container */
+      position: fixed;
+      top: 30px;
+      left: -10px;
+      width: 220px;
+      margin-top: 60px;
+      padding: 25px 20px;
+      z-index: 1000;
+      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+      margin-left: 0.4cm;
+      border-radius: 5px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .nav-tabs-container:hover {
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+      transform: translateY(-5px);
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+
+    /* Add more spacing between nav items */
+    .nav-tabs-container .nav-item {
+      margin-bottom: 10px;
+    }
+
+    /* Add a subtle border line between items */
+    .nav-tabs-container .nav-item:not(:last-child) {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 8px;
+    }
+
+    .content-container {
+      margin-left: 50px;
+      padding: 20px;
+      width: 100%;
+      border-radius: 20%;
+    }
+
+    .nav-pills .nav-link {
+      color: white;
+      font-weight: 600;
+    }
+
+    .nav-pills .nav-link.active {
+      color: white;
+      background-color: rgb(18, 87, 151);
+    }
+
+    .tab-content .tab-pane {
+      padding: 40px;
+      width: 100%;
+    }
+    .heading {
+      width: 90%;
+      font-weight: bold;
+      font-size: 30px;
+      color: #164dc4;
+    }
+  </style>
+
+  {% endblock %}
+</body>

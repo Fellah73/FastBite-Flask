@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {% block title %} Reservation {% endblock %} {% block
+budget %} {{ budget }} DZ {% endblock %} {% block content %}
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center">
+  <p class="lead font-weight-normal" style="font-size: 2.4rem; color: #263994">
+    Get your first table reservation in our fast-food
+  </p>
+  <a
+    class="btn"
+    style="
+      background-color: rgb(44, 83, 161);
+      color: gainsboro;
+      font-size: 1.2rem;
+      font-weight: 500;
+      padding: 15px;
+    "
+    href="{{ url_for('new_reservation_page') }}"
+    >Reserve a table now</a
+  >
+</div>
+<div class="row">
+  <table
+    class="table table-hover"
+    style="width: 90%; margin: auto; font-size: 1.25rem"
+  >
+    <thead>
+      <tr style="background-color: rgb(44, 83, 161); color: white">
+        <th scope="col">date et heure</th>
+        <th scope="col">numero de la table</th>
+        <th scope="col">numero of guests</th>
+        <th scope="col">actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for reservation in
+      Reservation.query.filter_by(user_id=current_user.id).all() %} {% include
+      'includes/reservation/delete_modals.html' %}
+      <tr style="background-color: rgb(44, 83, 161); color: white">
+        <td>{{ reservation.reservation_time }}</td>
+        <td>{{ reservation.table_id }}</td>
+        <td>{{ reservation.guests }}</td>
+        <td>
+          <button
+            class="btn"
+            style="background-color: #263994; color: white"
+            data-toggle="modal"
+          >
+            Order
+          </button>
+          <button
+            class="btn"
+            data-toggle="modal"
+            style="background-color: #782d0b; color: white"
+            data-target="#Modal-DeleteReservation-{{ reservation.id }}"
+          >
+            Annuler
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

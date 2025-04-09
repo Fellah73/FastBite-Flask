@@ -1,0 +1,39 @@
+<div class="modal fade" id="Modal-DeleteFood-{{ order.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">
+          <!-- -->
+          {{ order.product.food }}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <form method="POST">
+        {{ purchase_form.hidden_tag() }}
+        <h4 class="text-center">
+          Are you sure you want to cancel the command of {{ order.quantity }} {{ order.product.food }} for {{ order.price }} DZ ?
+        </h4>
+        <br>
+        <h6 class="text-center">
+          If you click you'll cancel this commmand
+        </h6>
+        <br>
+        <input id="purchased_item" name="purchased_item" type="hidden" value="{{ item.name }}">
+        {{ cancel_form.submit(class="btn btn-outline btn-success btn-block") }}
+
+
+
+      </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block title %}
+New Reservation
+{% endblock %}
+{% block content %}
+<style>
+    /* Primary colors: blue, violet, white */
+    :root {
+        --primary-blue: #1a75ff;
+        --primary-violet: #8a2be2;
+        --primary-white: #ffffff;
+        --light-blue: #e6f0ff;
+        --light-violet: #f3e6ff;
+    }
+
+    .reservation-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--primary-white);
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: var(--primary-blue);
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: bold;
+    }
+
+    .form-control {
+        border: 2px solid var(--primary-blue);
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 15px;
+        width: 100%;
+        transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-violet);
+        outline: none;
+        box-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+    }
+
+    label {
+        color: var(--primary-blue);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-blue), var(--primary-violet)) !important;
+        border: none !important;
+        color: var(--primary-white) !important;
+        padding: 12px 20px !important;
+        border-radius: 5px !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Alternating section colors for visual separation */
+    .form-group:nth-child(odd) .form-control {
+        background-color: var(--light-blue);
+    }
+
+    .form-group:nth-child(even) .form-control {
+        background-color: var(--light-violet);
+    }
+</style>
+
+<h1>Nouvelle Réservation</h1>
+<div class="reservation-container">
+    <form method="POST" class="form-signin">
+        {{ reserve_form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ reserve_form.reservation_day.label }}
+            {{ reserve_form.reservation_day(class="form-control datetimepicker", placeholder="Jour") }}
+        </div>
+        
+        <div class="form-group">
+            {{ reserve_form.reservation_mois.label }}
+            {{ reserve_form.reservation_mois(class="form-control datetimepicker", placeholder="Mois") }}
+        </div>
+        
+        <div class="form-group">
+            {{ reserve_form.reservation_annee.label }}
+            {{ reserve_form.reservation_annee(class="form-control datetimepicker", placeholder="Annee") }}
+        </div>
+        
+        <div class="form-group">
+            {{ reserve_form.reservation_horaire_hour.label }}
+            {{ reserve_form.reservation_horaire_hour(class="form-control datetimepicker", placeholder="Heure") }}
+        </div>
+
+        <div class="form-group">
+            {{ reserve_form.reservation_horaire_minute.label }}
+            {{ reserve_form.reservation_horaire_minute(class="form-control datetimepicker", placeholder="Minute") }}
+        </div>
+        
+        <div class="form-group">
+            {{ reserve_form.guests.label }}
+            {{ reserve_form.guests(class="form-control", placeholder="Nombre de personnes") }}
+        </div>
+        
+        <div class="form-group">
+            {{ reserve_form.submit(class="btn btn-lg btn-block btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

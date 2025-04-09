@@ -1,0 +1,104 @@
+<div class="modal fade" id="Modal-PurchaseFood-{{ sandwich.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color: rgb(58, 54, 54); color: wheat;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">
+          <!-- -->
+          {{ sandwich.name }}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4 class="text-center">
+          Quantity:
+          <input id="quantity-{{ sandwich.id }}" type="number" class="form-control d-inline" name="quantity" min="1" value="1" style="width: 60px; display: inline-block; margin: 0 5px; background-color: rgb(153, 107, 21); color: black;">
+        </h4>
+      </div>
+      <form method="POST">
+        {{ purchase_form.hidden_tag() }}
+        <h4 class="text-center">
+          Are you sure you want to buy {{sandwich.name}} for {{sandwich.price}} DZ each?
+        </h4>
+        <br>
+        <h6 class="text-center">
+          If you click you'll purchase this item
+        </h6>
+        <br>
+        <input id="purchased_sandwich" name="purchased_sandwich" type="hidden" value="{{ sandwich.id }}">
+        <!-- Input caché pour la quantité -->
+        <input id="purchased_sandwich_qte-{{ sandwich.id }}" name="purchased_sandwich_qte" type="hidden" value="1"> <!-- Initialisé à 1 par défaut -->
+
+        {{ purchase_form.submit(class="btn btn-outline btn-success btn-block") }}
+      </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  
+
+  {% for sandwich in Sandwich.query.filter_by(category="Tacos").all() %}
+  <script>document.getElementById('quantity-{{ sandwich.id }}').addEventListener('change', function() {
+    var quantity = this.value; // Récupère la nouvelle quantité
+
+    // Met à jour la valeur de l'input caché avec la nouvelle quantité
+    document.getElementById('purchased_sandwich_qte-{{ sandwich.id }}').value = quantity;
+  });</script>
+  {% endfor %}
+
+  {% for sandwich in Sandwich.query.filter_by(category="Kebab").all() %}
+  <script>document.getElementById('quantity-{{ sandwich.id }}').addEventListener('change', function() {
+    var quantity = this.value; // Récupère la nouvelle quantité
+
+    // Met à jour la valeur de l'input caché avec la nouvelle quantité
+    document.getElementById('purchased_sandwich_qte-{{ sandwich.id }}').value = quantity;
+  });</script>
+  {% endfor %}
+
+  {% for sandwich in Sandwich.query.filter_by(category="Wraps").all() %}
+  <script>document.getElementById('quantity-{{ sandwich.id }}').addEventListener('change', function() {
+    var quantity = this.value; // Récupère la nouvelle quantité
+
+    // Met à jour la valeur de l'input caché avec la nouvelle quantité
+    document.getElementById('purchased_sandwich_qte-{{ sandwich.id }}').value = quantity;
+  });</script>
+  {% endfor %}
+
+  {% for sandwich in Sandwich.query.filter_by(category="Sandwiches").all() %}
+  <script>document.getElementById('quantity-{{ sandwich.id }}').addEventListener('change', function() {
+    var quantity = this.value; // Récupère la nouvelle quantité
+
+    // Met à jour la valeur de l'input caché avec la nouvelle quantité
+    document.getElementById('purchased_sandwich_qte-{{ sandwich.id }}').value = quantity;
+  });</script>
+  {% endfor %}
+
+  {% for sandwich in Sandwich.query.filter_by(category="Burgers").all() %}
+  <script>document.getElementById('quantity-{{ sandwich.id }}').addEventListener('change', function() {
+    var quantity = this.value; // Récupère la nouvelle quantité
+
+    // Met à jour la valeur de l'input caché avec la nouvelle quantité
+    document.getElementById('purchased_sandwich_qte-{{ sandwich.id }}').value = quantity;
+  });</script>
+  {% endfor %}
+
+
+  
+  {% for sandwich in Sandwich.query.filter_by(category="Paninis").all() %}
+  <script>document.getElementById('quantity-{{ sandwich.id }}').addEventListener('change', function() {
+    var quantity = this.value; // Récupère la nouvelle quantité
+
+    // Met à jour la valeur de l'input caché avec la nouvelle quantité
+    document.getElementById('purchased_sandwich_qte-{{ sandwich.id }}').value = quantity;
+  });</script>
+  {% endfor %}
+
+ 
+

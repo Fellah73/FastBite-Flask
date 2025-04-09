@@ -1,0 +1,145 @@
+{% extends 'base.html' %} {% block title %} Panier {% endblock %} {% block
+budget %} {{ budget }} DZ {% endblock %} {% block content %}
+
+<body>
+  <div class="text-center">
+    <div class="container">
+      <form
+        method="POST"
+        class="form-register"
+        style="
+          margin: auto;
+          width: 80%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 20px;
+        "
+      >
+        {{ form.hidden_tag() }}
+
+        <p style="width: 60%">
+          {{ form.promo_code.label}} {{ form.promo_code(class="form-control
+          datetimepicker",placeholder="promo code") }}
+        </p>
+
+        <p style="width: 60%">
+          {{ form.submit(class="btn btn-lg btn-block btn-primary"
+          ,style="background-color: rgb(44, 83, 161);color: white;") }}
+        </p>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <h1 class="text-center mb-3 font-weight-normal">food in your commande</h1>
+      {% for food_category in categories %}
+      <h3
+        class="text-center"
+        style="color: rgb(44, 83, 161); font-size: 1.2rem; font-weight: 600"
+      >
+        {{food_category}}
+      </h3>
+      <table class="table table-hover" style="width: 95% ;margin: auto">
+        <thead style="background-color: rgb(44, 83, 161); color: white">
+          <tr>
+            <th scope="col">Type</th>
+            <th scope="col">nom de produit</th>
+            <th scope="col">quantity</th>
+            <th scope="col">price</th>
+            <th scope="col">actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in
+          OrderItem.query.filter_by(customer_id=current_user.id).filter_by(food_category=food_category).filter_by(menu_id=None).all()
+          %} {% include 'panier/delete_modals.html' %}
+          <tr style="background-color: rgb(44, 83, 161); color: white">
+            <td>{{order.food_category}}</td>
+            <td>{{order.product.name}}</td>
+            <td>{{order.quantity}}</td>
+            <td>{{order.price}}</td>
+            <td>
+              <button
+                class="btn"
+                style="background-color: #263994; color: white"
+              >
+                Order
+              </button>
+              <button
+                class="btn"
+                style="background-color: #1535d4; color: white"
+              >
+                Mettre a jour
+              </button>
+
+              <button
+                class="btn"
+                style="background-color: #782d0b; color: white"
+                data-toggle="modal"
+                data-target="#Modal-DeleteFood-{{ order.id }}"
+              >
+                Supprimer
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% endfor %}
+    </div>
+
+    <div class="col-6">
+      <h1 class="text-center mb-3 font-weight-normal">menu in your commande</h1>
+      {% for order in OrderItem.query.filter(OrderItem.customer_id ==
+      current_user.id, OrderItem.product_id == 1, OrderItem.menu_id !=
+      None).all() %} {% include 'panier/delete_modals.html' %}
+
+      <table class="table table-hover" style="width: 95%; margin: auto">
+        <thead style="background-color: rgb(44, 83, 161); color: white">
+          <tr>
+            <th scope="col">nom de produit</th>
+            <th scope="col">quantity</th>
+            <th scope="col">price</th>
+            <th scope="col">actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr style="background-color: rgb(44, 83, 161); color: white">
+            <td>{{ order.menuName() }}</td>
+            <td>{{order.quantity}}</td>
+            <td>{{order.price}}</td>
+            <td>
+              <button
+                class="btn"
+                style="background-color: #263994; color: white"
+              >
+                Order
+              </button>
+              <button
+                class="btn"
+                style="background-color: #1535d4; color: white"
+              >
+                Mettre a jour
+              </button>
+
+              <button
+                class="btn"
+                data-toggle="modal"
+                style="background-color: #782d0b; color: white"
+                data-target="#Modal-DeleteFood-{{ order.id }}"
+              >
+                Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+
+{% endblock %}
